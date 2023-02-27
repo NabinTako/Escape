@@ -2,24 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Actor
 {
     float horizontalInput, VerticalInput;
     public float xspeed, yspeed;
+    /*
     Vector3 motionX = Vector3.zero;
     Vector3 motionY = Vector3.zero;
     bool canMoveX = true;
-    bool canMoveY = true;
+    bool canMoveY = true; */
 
     //references
     Animator anim;
+    Rigidbody2D rb;
     private void Start()
     {
         anim = GetComponent<Animator>();
+        rb =GetComponent<Rigidbody2D>();
     }
     void Update()
     {
-        Movement();
+        if(Time.time> pushTime + pushRecovery)
+        {
+            Movement();
+        }
         if (Input.GetMouseButtonDown(0))
         {
             anim.SetTrigger("Attack");
@@ -31,12 +37,13 @@ public class Player : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         VerticalInput = Input.GetAxisRaw("Vertical");
 
+       Vector3 motion = new Vector3(horizontalInput * xspeed, VerticalInput * yspeed, 0) * Time.deltaTime;
 
-        motionX = new Vector3(horizontalInput * xspeed,0, 0);
-        motionY = new Vector3(0, VerticalInput * yspeed, 0);
+       // motionX = new Vector3(horizontalInput * xspeed,0, 0);
+       // motionY = new Vector3(0, VerticalInput * yspeed, 0);
 
         // Turn player left or right.
-       bool[] result = CheckCollision();
+        /* bool[] result = CheckCollision();
         // To move the player to the desired position
         if (result[0])
         {
@@ -46,11 +53,35 @@ public class Player : MonoBehaviour
         {
             transform.Translate(motionY * Time.deltaTime);
         }
+        */
+       rb.MovePosition(transform.position+ motion);
+
+  
 
     }
 
-    // Checking if hte player can move or not on a specified axis.
-    private bool[] CheckCollision()
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+
+        if(other.gameObject.tag == "Fighter") {
+            Knockback(other);
+        }
+
+    }
+    protected override void Knockback(Collision2D other)
+    {
+
+       Playerpos = rb.position;
+       EnemyPos = other.gameObject.transform.position;
+       pushDir = EnemyPos - Playerpos ;
+       pushTime = Time.time;
+      this.rb.MovePosition(transform.position +pushDir.normalized * -0.25f);
+
+    }
+
+
+    // Checking if the player can move or not on a specified axis.
+    /*private bool[] CheckCollision()
     {
         RaycastHit2D hitx, hity;
 
@@ -109,5 +140,6 @@ public class Player : MonoBehaviour
         bool[] result = {canMoveX, canMoveY};
         return result;
     }
+    */
 
 }
