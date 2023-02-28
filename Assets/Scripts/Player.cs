@@ -6,6 +6,8 @@ public class Player : Actor
 {
     float horizontalInput, VerticalInput;
     public float xspeed, yspeed;
+    [SerializeField]
+    private bool GiveDmg;
     /*
     Vector3 motionX = Vector3.zero;
     Vector3 motionY = Vector3.zero;
@@ -62,23 +64,34 @@ public class Player : Actor
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-
-        if(other.gameObject.tag == "Fighter") {
-            Knockback(other);
+        if(other.gameObject.tag == "Fighter")
+        {
+            if (GiveDmg == true)
+            {
+                other.gameObject.GetComponent<Enemy>().dmg(transform.position);
+            }
+            else
+            {
+                dmg(other.transform.position);
+            }
         }
+        
 
     }
-    protected override void Knockback(Collision2D other)
+    public override void dmg(Vector3 enemyPos)
     {
 
        Playerpos = rb.position;
-       EnemyPos = other.gameObject.transform.position;
-       pushDir = EnemyPos - Playerpos ;
+       pushDir = enemyPos - Playerpos ;
        pushTime = Time.time;
-      this.rb.MovePosition(transform.position +pushDir.normalized * -0.25f);
+      transform.Translate(pushDir.normalized * -0.22f);
 
     }
 
+    public bool getGivedmg()
+    {
+        return GiveDmg;
+    }
 
     // Checking if the player can move or not on a specified axis.
     /*private bool[] CheckCollision()

@@ -13,7 +13,7 @@ public class Actor : MonoBehaviour
     [SerializeField]
     protected float pushForce;
 
-    protected virtual void Knockback(Collision2D other)
+    public virtual void dmg(Vector3 pos)
     {
 
     }

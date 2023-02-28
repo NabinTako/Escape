@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class Enemy : Actor
 {
+
+    /*
+    protected Vector3 Playerpos;
+    protected Vector3 EnemyPos;
+    protected Vector3 pushDir;
+    protected float pushTime = 0f;
+    */
+
     Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();  
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -16,27 +24,15 @@ public class Enemy : Actor
     {
         
     }
-
-    public void dmg(Collision2D other)
+   
+    public override void dmg(Vector3 player)
     {
-     //   Knockback(other);
-    }
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        Debug.Log(other.gameObject.tag);
-      
-
-    }
-    protected override void Knockback(Collision2D other)
-    {
-        base.Knockback(other);
-    /*
-        Playerpos = other.gameObject.transform.position;
-        EnemyPos = transform.position;
-        pushDir = Playerpos - EnemyPos;
-        pushTime = Time.time;
-        rb.MovePosition(transform.position + pushDir.normalized * -0.25f);
-    */
+      Playerpos = player;
+      EnemyPos = transform.position;
+      pushDir = Playerpos - EnemyPos;
+      pushTime = Time.time;
+      transform.Translate( pushDir.normalized * -0.25f);
+    
     }
    
 

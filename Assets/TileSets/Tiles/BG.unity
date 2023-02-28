@@ -146556,7 +146556,7 @@ GameObject:
   - component: {fileID: 1575128635}
   - component: {fileID: 1575128637}
   - component: {fileID: 1575128639}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: elf_f_hit_anim_f0
   m_TagString: Fighter
   m_Icon: {fileID: 0}
@@ -146663,12 +146663,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1575128634}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9779ca308318c794999c46c6f70aa550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushRecovery: 0.2
+  pushRecovery: 0
   pushForce: 0
 --- !u!1 &1660543579
 GameObject:
@@ -148211,6 +148211,7 @@ MonoBehaviour:
   pushForce: 0
   xspeed: 3
   yspeed: 2.5
+  GiveDmg: 0
 --- !u!50 &2045470311
 Rigidbody2D:
   serializedVersion: 4
