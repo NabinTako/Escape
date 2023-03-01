@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : Actor
@@ -41,8 +42,61 @@ public class Player : Actor
 
        Vector3 motion = new Vector3(horizontalInput * xspeed, VerticalInput * yspeed, 0) * Time.deltaTime;
 
-       // motionX = new Vector3(horizontalInput * xspeed,0, 0);
-       // motionY = new Vector3(0, VerticalInput * yspeed, 0);
+       
+        if (horizontalInput > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            anim.SetBool("isRunning", true);
+            anim.SetBool("isLookingUp", false);
+            anim.SetBool("isLookingDown", false);
+
+        }
+        else if (horizontalInput < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+            anim.SetBool("isRunning", true);
+            anim.SetBool("isLookingUp", false);
+            anim.SetBool("isLookingDown", false);
+        }
+        else
+        {
+            anim.SetBool("isRunning", false);
+        }
+
+        if(VerticalInput > 0)
+        {
+            anim.SetBool("isLookingDown", false);
+            anim.SetBool("isLookingUp", true);
+        }
+        else if (VerticalInput < 0)
+        {
+            anim.SetBool("isLookingUp", false);
+            anim.SetBool("isLookingDown", true);
+        }
+
+        if(horizontalInput > 0 && VerticalInput > 0)
+        {
+            anim.SetBool("isRunning", true);
+            anim.SetBool("isLookingUp", true);
+        }else if(horizontalInput < 0 && VerticalInput < 0)
+        {
+            anim.SetBool("isRunning", true);
+            anim.SetBool("isLookingDown", true);
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            anim.SetBool("isLookingUp", true);
+            anim.SetBool("isLookingDown", false);
+            anim.SetBool("isRunning", true);
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            anim.SetBool("isLookingDown", true);
+            anim.SetBool("isLookingUp", false);
+            anim.SetBool("isRunning", true);
+        }
+        // motionX = new Vector3(horizontalInput * xspeed,0, 0);
+        // motionY = new Vector3(0, VerticalInput * yspeed, 0);
 
         // Turn player left or right.
         /* bool[] result = CheckCollision();
@@ -56,7 +110,7 @@ public class Player : Actor
             transform.Translate(motionY * Time.deltaTime);
         }
         */
-       rb.MovePosition(transform.position+ motion);
+        rb.MovePosition(transform.position+ motion);
 
   
 
@@ -68,23 +122,23 @@ public class Player : Actor
         {
             if (GiveDmg == true)
             {
-                other.gameObject.GetComponent<Enemy>().dmg(transform.position);
+                other.gameObject.GetComponent<Enemy>().dmg(transform.position,pushForce);
             }
             else
             {
-                dmg(other.transform.position);
+                dmg(other.transform.position, other.gameObject.GetComponent<Enemy>().getPushForce());
             }
         }
         
 
     }
-    public override void dmg(Vector3 enemyPos)
+    public override void dmg(Vector3 other, float force)
     {
 
-       Playerpos = rb.position;
-       pushDir = enemyPos - Playerpos ;
+       Playerpos = transform.position;
+       pushDir = other - Playerpos;
        pushTime = Time.time;
-      transform.Translate(pushDir.normalized * -0.22f);
+      transform.Translate(pushDir.normalized * -force);
 
     }
 

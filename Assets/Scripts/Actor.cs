@@ -13,6 +13,10 @@ public class Actor : MonoBehaviour
     [SerializeField]
     protected float pushForce;
 
+    public virtual void dmg(Vector3 pos, float force)
+    {
+
+    }
     public virtual void dmg(Vector3 pos)
     {
 
