@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Enemy : Actor
 {
-    public bool chase=false;
+    public bool chase = false;
     public float speed = 0.5f;
+    protected int Hp = 10;
+    protected int dmgAmount = 5;
 
 
     public Vector3 playerPosition;
@@ -13,7 +15,6 @@ public class Enemy : Actor
     // Start is called before the first frame update
     void Start()
     {
-      
 
     }
 
@@ -27,12 +28,15 @@ public class Enemy : Actor
          }
     }
    
-    public override void dmg(Vector3 player,float force)
+    public override void dmg(Vector3 player,float force,float dmgtaken)
     {
-      Playerpos = player;
-      pushDir = Playerpos - transform.position;
-      pushTime = Time.time;
-      transform.Translate(pushDir.normalized * -force);
+        Playerpos = player;
+        pushDir = Playerpos - transform.position;
+        pushTime = Time.time;
+        transform.Translate(pushDir.normalized * -force);
+
+        Gamemanager.instance.ShowText(dmgtaken.ToString(), 20, Color.red, transform.position, Vector3.up * 40, 2.0f);
+
     } 
    
 
@@ -42,7 +46,15 @@ public class Enemy : Actor
         return pushForce;
     }
 
-    
-   
+    public override int HpLeft()
+    {
+        return base.HpLeft();
+    }
+
+    public override int DmgDone()
+    {
+        return base.DmgDone();
+    }
+
 
 }

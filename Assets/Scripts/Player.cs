@@ -9,6 +9,8 @@ public class Player : Actor
     public float xspeed, yspeed;
     [SerializeField]
     private bool GiveDmg;
+    protected int Hp = 10;
+    protected int dmgAmount = 5;
     /*
     Vector3 motionX = Vector3.zero;
     Vector3 motionY = Vector3.zero;
@@ -122,11 +124,14 @@ public class Player : Actor
         {
             if (GiveDmg == true)
             {
-                other.gameObject.GetComponent<Enemy>().dmg(transform.position,pushForce);
+                other.gameObject.GetComponent<Enemy>().dmg(transform.position,pushForce,dmgAmount);
             }
             else
             {
-                dmg(other.transform.position, other.gameObject.GetComponent<Enemy>().getPushForce());
+                Enemy ene = other.gameObject.GetComponent<Enemy>();
+                int dmgtaken = ene.DmgDone();
+                dmg(other.transform.position, ene.getPushForce());
+                Gamemanager.instance.ShowText(dmgtaken.ToString(), 20, Color.red, transform.position, Vector3.up * 40, 2.0f);
             }
         }
         
@@ -208,5 +213,13 @@ public class Player : Actor
         return result;
     }
     */
+    public override int HpLeft()
+    {
+        return base.HpLeft();
+    }
 
+    public override int DmgDone()
+    {
+        return base.DmgDone();
+    }
 }
