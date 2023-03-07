@@ -6,8 +6,8 @@ public class Enemy : Actor
 {
     public bool chase = false;
     public float speed = 0.5f;
-    protected int Hp = 10;
-    protected int dmgAmount = 5;
+    protected new int Hp = 10;
+    protected new int dmgAmount = 5;
 
 
     public Vector3 playerPosition;
@@ -36,6 +36,7 @@ public class Enemy : Actor
         transform.Translate(pushDir.normalized * -force);
 
         Gamemanager.instance.ShowText(dmgtaken.ToString(), 20, Color.red, transform.position, Vector3.up * 40, 2.0f);
+        Hp -= (int) dmgtaken;
 
     } 
    

@@ -7,10 +7,12 @@ public class Player : Actor
 {
     float horizontalInput, VerticalInput;
     public float xspeed, yspeed;
+    protected new int Hp = 10;
+    protected new int dmgAmount = 5;
+    public int coins;
+
     [SerializeField]
     private bool GiveDmg;
-    protected int Hp = 10;
-    protected int dmgAmount = 5;
     /*
     Vector3 motionX = Vector3.zero;
     Vector3 motionY = Vector3.zero;
@@ -20,6 +22,12 @@ public class Player : Actor
     //references
     Animator anim;
     Rigidbody2D rb;
+
+    private void Awake()
+    {
+        transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
+    }
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -128,10 +136,11 @@ public class Player : Actor
             }
             else
             {
-                Enemy ene = other.gameObject.GetComponent<Enemy>();
-                int dmgtaken = ene.DmgDone();
-                dmg(other.transform.position, ene.getPushForce());
+                Enemy enemy = other.gameObject.GetComponent<Enemy>();
+                int dmgtaken = enemy.DmgDone();
                 Gamemanager.instance.ShowText(dmgtaken.ToString(), 20, Color.red, transform.position, Vector3.up * 40, 2.0f);
+                dmg(other.transform.position, enemy.getPushForce());
+                Hp -= dmgtaken;
             }
         }
         
@@ -213,6 +222,10 @@ public class Player : Actor
         return result;
     }
     */
+    public void getCoin(int amount)
+    {
+        coins += amount;
+    }
     public override int HpLeft()
     {
         return base.HpLeft();

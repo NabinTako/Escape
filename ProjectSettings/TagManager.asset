@@ -7,6 +7,8 @@ TagManager:
   - Fighter
   - Blocking
   - Weapon
+  - Spawn
+  - Items
   layers:
   - Default
   - TransparentFX
@@ -49,4 +51,7 @@ TagManager:
     locked: 0
   - name: Weapon
     uniqueID: 3676166311
+    locked: 0
+  - name: Items
+    uniqueID: 3387774333
     locked: 0
