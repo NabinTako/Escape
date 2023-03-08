@@ -25,7 +25,7 @@ public class Player : Actor
 
     private void Awake()
     {
-        transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
+        OnSpwan();
     }
 
     private void Start()
@@ -43,6 +43,12 @@ public class Player : Actor
         {
             anim.SetTrigger("Attack");
         }
+    }
+
+    private void OnSpwan()
+    {
+
+        transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
     }
     private void Movement()
     {

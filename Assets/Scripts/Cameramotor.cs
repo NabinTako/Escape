@@ -9,6 +9,11 @@ public class Cameramotor : MonoBehaviour
 
     public float boundX = 0.2f;
     public float boundY = 0.05f;
+
+    private void Awake()
+    {
+        PlayerPosition = GameObject.Find("Player").transform;
+    }
     void Start()
     {
         transform.position = new Vector3(PlayerPosition.position.x,PlayerPosition.position.y,-10);

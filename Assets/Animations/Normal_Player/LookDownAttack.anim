@@ -195,7 +195,14 @@ AnimationClip:
     path: WoddenSword
     classID: 61
     script: {fileID: 0}
-  m_PPtrCurves: []
+  m_PPtrCurves:
+  - curve:
+    - time: 0
+      value: {fileID: -378888464, guid: 92bc9e3e94a9eae4dba0a16c5ff6ad0b, type: 3}
+    attribute: m_Sprite
+    path: 
+    classID: 212
+    script: {fileID: 0}
   m_SampleRate: 20
   m_WrapMode: 0
   m_Bounds:
@@ -231,7 +238,15 @@ AnimationClip:
       typeID: 61
       customType: 0
       isPPtrCurve: 0
-    pptrCurveMapping: []
+    - serializedVersion: 2
+      path: 0
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+    pptrCurveMapping:
+    - {fileID: -378888464, guid: 92bc9e3e94a9eae4dba0a16c5ff6ad0b, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
